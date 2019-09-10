@@ -20,6 +20,11 @@ class WildfiresController < ApplicationController
     render json: wildfire, except: [:updated_at, :created_at]
   end
 
+  def destroy
+    wildfire = Wildfire.find_by(id: params[:id])
+    wildfire.delete
+  end
+
 
   private
 

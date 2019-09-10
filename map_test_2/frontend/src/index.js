@@ -1,5 +1,6 @@
 const BASE_URL = "http://localhost:3000"
 const WILDFIRES_URL = `${BASE_URL}/wildfires`
+const markers = {}
 
   function initMap() {
     let map = new google.maps.Map(
@@ -155,9 +156,10 @@ const WILDFIRES_URL = `${BASE_URL}/wildfires`
       let link = createCardLink(wildfire)
       let lat = createCardLat(wildfire)
       let long = createCardLong(wildfire)
-      let deleteButton = createCardDelete()
+      // let deleteButton = createCardDelete(wildfire)
 
-      card.append(title, description, lat, long, link, deleteButton)
+      // card.append(title, description, lat, long, link, deleteButton)
+      card.append(title, description, lat, long, link)
 
       setWildfireCoords(wildfire, card)
 
@@ -203,20 +205,36 @@ const WILDFIRES_URL = `${BASE_URL}/wildfires`
       return long
     }
 
-    function createCardDelete(wildfire){
+    function createCardDelete(wildfire, marker){
       let deleteButton = document.createElement('button')
       deleteButton.innerText = "Delete Wildfire"
       deleteButton.style.margin = "10px"
       deleteButton.style.color = "orange"
+
+      createDeleteEvent(wildfire, deleteButton, marker)
+
       return deleteButton
     }
 
-    function createDeleteEvent(deleteButton, id){
+    function createDeleteEvent(wildfire, deleteButton, marker){
       deleteButton.addEventListener('click', function(event){
-        deleteWildfire(id, event)
+        deleteWildfire(wildfire, event, marker)
       })
     }
 
+    function deleteWildfire(wildfire, event, marker){
+      marker.setMap(null)
+      let id = wildfire.id
+
+      let deleteConfig = {
+        method: 'DELETE'
+      }
+
+      fetch(WILDFIRES_URL + `/${wildfire.id}`, deleteConfig)
+      .catch(function(error){
+        console.log(error.message)
+      })
+    }
 
     function setWildfireCoords(wildfire, card){
       let latitude = wildfire.latitude
@@ -234,6 +252,10 @@ const WILDFIRES_URL = `${BASE_URL}/wildfires`
           content: card
         })
         wildfireInfo.open(map, marker)
+
+        let deleteButton = createCardDelete(wildfire, marker)
+        card.append(deleteButton)
+
       })
 
       google.maps.event.addListener(marker, 'dragend', function(marker){

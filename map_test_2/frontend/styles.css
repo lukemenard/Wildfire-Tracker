@@ -1,0 +1,22 @@
+html body{
+  display: flex;
+  flex-flow: column;
+  height: 100%
+}
+
+h1{
+  padding: 10px;
+  color: orange;
+}
+
+#map {
+  width: 100%;
+  /* flex-grow: 1; */
+  height: 800px;
+  border-top: 5px solid orange;
+  border-bottom: 5px solid orange;
+}
+
+nav{
+
+}

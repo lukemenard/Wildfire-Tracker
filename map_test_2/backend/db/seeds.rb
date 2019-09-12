@@ -7,6 +7,7 @@ require 'nokogiri'
 require 'xml/to/json'
 
 Wildfire.destroy_all
+Polygon.destroy_all
 
 response = STR_XML = RestClient.get('https://inciweb.nwcg.gov/feeds/rss/incidents/')
 scrape = Nokogiri::XML STR_XML
@@ -20,6 +21,16 @@ wildfires.each do |wildfire|
     description: wildfire.children[8]
   )
 end
+
+
+Wildfire.create(
+  title: "Test",
+  latitude: 0,
+  longitude: 0,
+  link: "Test",
+  description: "Test"
+)
+
 
 
 # polygon_response = RestClient.get('https://wildfire.cr.usgs.gov/ArcGIS/rest/services/geomac_dyn/MapServer/3')

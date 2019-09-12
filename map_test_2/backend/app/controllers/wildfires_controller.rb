@@ -6,7 +6,8 @@ class WildfiresController < ApplicationController
   end
 
   def create
-    Wildfire.create(wildfire_params)
+    wildfire = Wildfire.create(title: params[:title], latitude: params[:latitude], longitude: params[:longitude], link: params[:link], description: params[:description])
+    render json: wildfire, except: [:updated_at, :created_at]
   end
 
   def show
@@ -29,7 +30,7 @@ class WildfiresController < ApplicationController
   private
 
   def wildfire_params
-    params.require(:wildfire).permit(:id, :title, :latitude, :longitude, :description)
+    params.require(:wildfire).permit(:id, :title, :latitude, :longitude, :description, :link)
   end
 
 end

@@ -1,4 +1,3 @@
 class Wildfire < ApplicationRecord
-  has_many :sightings
-  has_many :locations, through: :sightings
+  has_many :polygons
 end

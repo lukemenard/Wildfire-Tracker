@@ -144,8 +144,8 @@ const polygon = []
           lng: position.coords.longitude
         };
         currentLocation.setPosition(pos);
-        currentLocation.setContent('Current Location');
-        currentLocation.open(map);
+        // currentLocation.setContent('Current Location');
+        // currentLocation.open(map);
         map.setCenter(pos);
       }, function() {
         handleLocationError(true, currentLocation, map.getCenter());
@@ -228,7 +228,7 @@ const polygon = []
 
     function polygonInfoWindow(polygon, card){
       google.maps.event.addListener(polygon,'click', function(){
-        let polygonInfo = new google.maps.InfoWindow({
+        const polygonInfo = new google.maps.InfoWindow({
           content: card,
           position: {lat: polygon.lat1, lng: polygon.long1}
         })
@@ -237,38 +237,48 @@ const polygon = []
 
         let deleteButton = createPolygonCardDelete(polygon)
         card.append(deleteButton)
-
     }
 
     function createCard(){
-      return document.createElement('div')
+      card = document.createElement('div')
+      card.classList.add("card")
+      return card
     }
 
     function createPolygonCard(){
-      return document.createElement('div')
+      polyCard = document.createElement('div')
+      polyCard.classList.add("polyCard")
+      return polyCard
     }
 
     function createCardTitle(wildfire){
       let title = document.createElement('h2')
       title.innerText = wildfire.title
+      title.classList.add("card-title")
       return title
     }
 
     function createPolygonCardTitle(polygon){
       let title = document.createElement('h2')
       title.innerText = polygon.title
+      title.classList.add("poly-card-title")
       return title
     }
 
     function createCardDescription(wildfire){
       let description = document.createElement('p')
-      description.textContent = wildfire.description
+      // debugger
+      dessplit1 = wildfire.description.split('<description>')[1]
+      description_final = dessplit1.split('</description>')[0]
+      description.textContent = description_final
+      description.classList.add('description')
       return description
     }
 
     function createPolygonCardDescription(polygon){
       let description = document.createElement('p')
       description.textContent = polygon.description
+      description.classList.add('poly-description')
       return description
     }
 
@@ -280,6 +290,7 @@ const polygon = []
       link.append(linkText)
       link.title = "Wildfire Details"
       link.target = '_blank'
+      link.classList.add('link')
       return link
     }
 
@@ -291,12 +302,14 @@ const polygon = []
       link.append(linkText)
       link.title = "Wildfire Details"
       link.target = '_blank'
+      link.classList.add('poly-link')
       return link
     }
 
     function createCardLat(wildfire){
       let lat = document.createElement('p')
       lat.innerText = `Latitude: ${wildfire.latitude}`
+      lat.classList.add('lat')
       return lat
     }
 
@@ -309,6 +322,7 @@ const polygon = []
     function createCardLong(wildfire){
       let long = document.createElement('p')
       long.innerText = `Longitude: ${wildfire.longitude}`
+      long.classList.add('long')
       return long
     }
 
@@ -321,8 +335,9 @@ const polygon = []
     function createCardDelete(wildfire, marker){
       let deleteButton = document.createElement('button')
       deleteButton.innerText = "Delete Wildfire"
-      deleteButton.style.margin = "10px"
-      deleteButton.style.color = "orange"
+      // deleteButton.style.margin = "10px"
+      // deleteButton.style.color = "orange"
+      deleteButton.classList.add('deleteButton')
 
       createDeleteEvent(wildfire, deleteButton, marker)
 
@@ -332,11 +347,12 @@ const polygon = []
     function createPolygonCardDelete(polygon){
       let polygonDeleteButton = document.createElement('button')
       polygonDeleteButton.innerText = "Delete Wildfire"
-      polygonDeleteButton.style.margin = "10px"
-      polygonDeleteButton.style.color = "orange"
+      // polygonDeleteButton.style.margin = "10px"
+      // polygonDeleteButton.style.color = "orange"
+      polygonDeleteButton.classList.add('poly-deleteButton')
+
 
       createPolygonDeleteEvent(polygon, polygonDeleteButton)
-
       // let id = polygon.id
       // console.log(id)
       // polygonDeleteButton.id = polygon.id
@@ -365,7 +381,7 @@ const polygon = []
       })
     }
 
-    function createPolygonDeleteEvent(polygon, deleteButton){
+    function createPolygonDeleteEvent(polygon, deleteButton, ){
       // deleteButton.addEventListener('click', deletePolygon)
       deleteButton.addEventListener('click', () => {
         fetchPolygon(polygon)
@@ -424,6 +440,7 @@ const polygon = []
     google.maps.event.addListener(map, 'dblclick', function(event){
 
       let submitButton = document.createElement('button')
+      submitButton.classList.add('submitButton')
       submitButton.innerText = 'Create New Wildfire'
       submitButton.style.margin = '10px'
       submitButton.addEventListener('click', function(event){
@@ -435,15 +452,18 @@ const polygon = []
 
       let form = document.createElement('form')
       form.innerHTML =
-        `<form id="newFireForm" name="form_canvas">
-              <h3> Create New Wildfire </h3>
-              <input type="hidden" id="id" name="id"  value="id">
-              Title: <input type="text" id="title" name="title"  value=""><br/>
-              Description: <input type="textContent" id="description" name="description"  value=""><br/>
-              Latitude: <input id="latitude" name="latitude"  value="${event.latLng.lat()}"><br/>
-              Longitude: <input id="longitude" name="longitude"  value="${event.latLng.lng()}"><br/>
-              Link: <input type="text" id="link" name="link"  value=""><br/>
-            </form>`
+        ` <div class='newFireForm'>
+            <form id="newFireForm" name="form_canvas">
+                <h3 class="newFireFormh3"> Create New Wildfire </h3>
+                <input type="hidden" id="id" name="id"  value="id">
+                Title: <input class="newFireFormTitle" type="text" id="title" name="title"  value=""><br/>
+                Description: <input class="newFireFormDescription" type="textContent" id="description" name="description"  value=""><br/>
+                Latitude: <input class="newFireFormLat" id="latitude" name="latitude"  value="${event.latLng.lat()}"><br/>
+                Longitude: <input class="newFireFormLong" id="longitude" name="longitude"  value="${event.latLng.lng()}"><br/>
+                Link: <input class="newFireFormLink" type="text" id="link" name="link"  value=""><br/>
+              </form>
+            </div>
+          `
       div.append(form, submitButton)
 
       let marker = new google.maps.Marker({
@@ -573,8 +593,8 @@ const polygon = []
 
           }
 
-
         let polySubmitButton = document.createElement('button')
+        polySubmitButton.classList.add('polySubmitButton')
         polySubmitButton.innerText = 'Create New Wildfire'
         polySubmitButton.style.margin = '10px'
         polySubmitButton.addEventListener('click', function(event){
@@ -586,44 +606,48 @@ const polygon = []
 
         let form = document.createElement('form')
         form.innerHTML =
-          `<form id="newFireForm" name="form_canvas">
-                <h3> Create New Wildfire </h3>
-                <input type="hidden" id="id" name="id"  value="id">
-                <input type="hidden" id="wildfire_id" name="wildfire_id"  value="wildfire_id">
-                <input type="hidden" id="lat1" name="lat1" value="${latLng[0]}">
-                <input type="hidden" id="lat2" name="lat2" value="${latLng[2]}">
-                <input type="hidden" id="lat3" name="lat3" value="${latLng[4]}">
-                <input type="hidden" id="lat4" name="lat4" value="${latLng[6]}">
-                <input type="hidden" id="lat5" name="lat5" value="${latLng[8]}">
-                <input type="hidden" id="lat6" name="lat6" value="${latLng[10]}">
-                <input type="hidden" id="lat7" name="lat7" value="${latLng[12]}">
-                <input type="hidden" id="lat8" name="lat8" value="${latLng[14]}">
-                <input type="hidden" id="lat9" name="lat9" value="${latLng[16]}">
-                <input type="hidden" id="lat10" name="lat10" value="${latLng[18]}">
-                <input type="hidden" id="lat11" name="lat11" value="${latLng[20]}">
-                <input type="hidden" id="lat12" name="lat12" value="${latLng[22]}">
-                <input type="hidden" id="lat13" name="lat13" value="${latLng[24]}">
-                <input type="hidden" id="lat14" name="lat14" value="${latLng[26]}">
-                <input type="hidden" id="lat15" name="lat15" value="${latLng[28]}">
-                <input type="hidden" id="long1" name="long1" value="${latLng[1]}">
-                <input type="hidden" id="long2" name="long2" value="${latLng[3]}">
-                <input type="hidden" id="long3" name="long3" value="${latLng[5]}">
-                <input type="hidden" id="long4" name="long4" value="${latLng[7]}">
-                <input type="hidden" id="long5" name="long5" value="${latLng[9]}">
-                <input type="hidden" id="long6" name="long6" value="${latLng[11]}">
-                <input type="hidden" id="long7" name="long7" value="${latLng[13]}">
-                <input type="hidden" id="long8" name="long8" value="${latLng[15]}">
-                <input type="hidden" id="long9" name="long9" value="${latLng[17]}">
-                <input type="hidden" id="long10" name="long10" value="${latLng[19]}">
-                <input type="hidden" id="long11" name="long11" value="${latLng[21]}">
-                <input type="hidden" id="long12" name="long12" value="${latLng[23]}">
-                <input type="hidden" id="long13" name="long13" value="${latLng[25]}">
-                <input type="hidden" id="long14" name="long14" value="${latLng[27]}">
-                <input type="hidden" id="long15" name="long15" value="${latLng[29]}">
-                Title: <input type="text" id="title" name="title"  value=""><br/>
-                Description: <input type="textContent" id="description" name="description"  value=""><br/>
-                Link: <input type="text" id="link" name="link"  value=""><br/>
-              </form>`
+          `
+          <div class="newPolyForm">
+            <form id="newFireForm" name="form_canvas">
+                  <h3 class="newPolyFormh3"> Create New Wildfire </h3>
+                  <input type="hidden" id="id" name="id"  value="id">
+                  <input type="hidden" id="wildfire_id" name="wildfire_id"  value="wildfire_id">
+                  <input type="hidden" id="lat1" name="lat1" value="${latLng[0]}">
+                  <input type="hidden" id="lat2" name="lat2" value="${latLng[2]}">
+                  <input type="hidden" id="lat3" name="lat3" value="${latLng[4]}">
+                  <input type="hidden" id="lat4" name="lat4" value="${latLng[6]}">
+                  <input type="hidden" id="lat5" name="lat5" value="${latLng[8]}">
+                  <input type="hidden" id="lat6" name="lat6" value="${latLng[10]}">
+                  <input type="hidden" id="lat7" name="lat7" value="${latLng[12]}">
+                  <input type="hidden" id="lat8" name="lat8" value="${latLng[14]}">
+                  <input type="hidden" id="lat9" name="lat9" value="${latLng[16]}">
+                  <input type="hidden" id="lat10" name="lat10" value="${latLng[18]}">
+                  <input type="hidden" id="lat11" name="lat11" value="${latLng[20]}">
+                  <input type="hidden" id="lat12" name="lat12" value="${latLng[22]}">
+                  <input type="hidden" id="lat13" name="lat13" value="${latLng[24]}">
+                  <input type="hidden" id="lat14" name="lat14" value="${latLng[26]}">
+                  <input type="hidden" id="lat15" name="lat15" value="${latLng[28]}">
+                  <input type="hidden" id="long1" name="long1" value="${latLng[1]}">
+                  <input type="hidden" id="long2" name="long2" value="${latLng[3]}">
+                  <input type="hidden" id="long3" name="long3" value="${latLng[5]}">
+                  <input type="hidden" id="long4" name="long4" value="${latLng[7]}">
+                  <input type="hidden" id="long5" name="long5" value="${latLng[9]}">
+                  <input type="hidden" id="long6" name="long6" value="${latLng[11]}">
+                  <input type="hidden" id="long7" name="long7" value="${latLng[13]}">
+                  <input type="hidden" id="long8" name="long8" value="${latLng[15]}">
+                  <input type="hidden" id="long9" name="long9" value="${latLng[17]}">
+                  <input type="hidden" id="long10" name="long10" value="${latLng[19]}">
+                  <input type="hidden" id="long11" name="long11" value="${latLng[21]}">
+                  <input type="hidden" id="long12" name="long12" value="${latLng[23]}">
+                  <input type="hidden" id="long13" name="long13" value="${latLng[25]}">
+                  <input type="hidden" id="long14" name="long14" value="${latLng[27]}">
+                  <input type="hidden" id="long15" name="long15" value="${latLng[29]}">
+                  Title: <input class="newPolyFormTitle" type="text" id="title" name="title"  value=""><br/>
+                  Description: <input class="newPolyFormDescription" type="textContent" id="description" name="description"  value=""><br/>
+                  Link: <input class="newPolyFormLink" type="text" id="link" name="link"  value=""><br/>
+                </form>
+              </div>
+              `
 
         div.append(form, polySubmitButton)
 

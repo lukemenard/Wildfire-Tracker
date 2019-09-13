@@ -5,6 +5,7 @@ let wildfires = []
 let side_bar_html = ""
 let selector = document.createElement('select')
 const body = document.body
+const polygon = []
 
   function initMap() {
     let map = new google.maps.Map(
@@ -105,7 +106,8 @@ const body = document.body
       drawingControl: true,
       drawingControlOptions: {
         position: google.maps.ControlPosition.BOTTOM_CENTER,
-        drawingModes: ['polygon', 'marker', 'circle', 'rectangle']
+        drawingModes: ['polygon']
+        // drawingModes: ['polygon', 'marker', 'circle', 'rectangle']
       },
       circleOptions: {
         fillColor: '#ff5733',
@@ -152,6 +154,7 @@ const body = document.body
       handleLocationError(false, currentLocation, map.getCenter());
     }
     getWildfirePoints()
+    getPolygons()
 
     function getWildfirePoints(){
       fetch(WILDFIRES_URL)
@@ -159,13 +162,17 @@ const body = document.body
       .then(response => response.forEach(renderWildfireCard))
     }
 
+    function getPolygons(){
+      fetch(POLYGONS_URL)
+      .then(response => response.json())
+      // .then(response => console.log(response))
+      .then(response => response.forEach(renderPolygonCard))
+    }
+
 
     // let side_bar = document.getElementById('side_bar')
     // side_bar.innerHTML = "<select onchange='myclick(this.value);'>"+side_bar_html+"</select>"
     // google.maps.event.trigger(wildfires.title, 'click')
-
-
-
 
     // const selectorOptions = (wildfireList) => {
     //   console.log(wildfireList)
@@ -196,16 +203,48 @@ const body = document.body
       let deleteButton = createCardDelete(wildfire)
 
       card.append(title, description, lat, long, link)
-      wildfires.push(wildfire.title)
+      // wildfires.push(wildfire.title)
       // side_bar_html += '<option value=' + (wildfires.length-1) + '>' + wildfire.title + '<\/option>'
       setWildfireCoords(wildfire, card)
 
       return card
     }
 
-    // selectorOptions(wildfires)
+    function renderPolygonCard(polygon){
+      let card = createPolygonCard()
+      let title = createPolygonCardTitle(polygon)
+      let description = createPolygonCardDescription(polygon)
+      let link = createPolygonCardLink(polygon)
+      // let lat = createPolygonCardLat(polygon)
+      // let long = createPolygonCardLong(polygon)
+      let deleteButton = createPolygonCardDelete(polygon)
+
+      card.append(title, description, link)
+
+      setPolygonCoords(polygon, card)
+
+      return card
+    }
+
+    function polygonInfoWindow(polygon, card){
+      google.maps.event.addListener(polygon,'click', function(){
+        let polygonInfo = new google.maps.InfoWindow({
+          content: card,
+          position: {lat: polygon.lat1, lng: polygon.long1}
+        })
+      })
+        polygonInfo.open(map)
+
+        let deleteButton = createPolygonCardDelete(polygon)
+        card.append(deleteButton)
+
+    }
 
     function createCard(){
+      return document.createElement('div')
+    }
+
+    function createPolygonCard(){
       return document.createElement('div')
     }
 
@@ -215,9 +254,21 @@ const body = document.body
       return title
     }
 
+    function createPolygonCardTitle(polygon){
+      let title = document.createElement('h2')
+      title.innerText = polygon.title
+      return title
+    }
+
     function createCardDescription(wildfire){
       let description = document.createElement('p')
       description.textContent = wildfire.description
+      return description
+    }
+
+    function createPolygonCardDescription(polygon){
+      let description = document.createElement('p')
+      description.textContent = polygon.description
       return description
     }
 
@@ -232,17 +283,40 @@ const body = document.body
       return link
     }
 
+    function createPolygonCardLink(polygon){
+      let linkTag = document.createElement('LINK')
+      let link = document.createElement('a')
+      let linkText = "Wildfire Details"
+      link.href = polygon.link
+      link.append(linkText)
+      link.title = "Wildfire Details"
+      link.target = '_blank'
+      return link
+    }
+
     function createCardLat(wildfire){
       let lat = document.createElement('p')
       lat.innerText = `Latitude: ${wildfire.latitude}`
       return lat
     }
 
+    // function createPolygonCardLat(polygon){
+    //   let lat = document.createElement('p')
+    //   lat.innerText = `Latitude: ${polygon.latitude}`
+    //   return lat
+    // }
+
     function createCardLong(wildfire){
       let long = document.createElement('p')
       long.innerText = `Longitude: ${wildfire.longitude}`
       return long
     }
+
+    // function createPolygonCardLong(polygon){
+    //   let long = document.createElement('p')
+    //   long.innerText = `Longitude: ${polygon.longitude}`
+    //   return long
+    // }
 
     function createCardDelete(wildfire, marker){
       let deleteButton = document.createElement('button')
@@ -255,11 +329,84 @@ const body = document.body
       return deleteButton
     }
 
+    function createPolygonCardDelete(polygon){
+      let polygonDeleteButton = document.createElement('button')
+      polygonDeleteButton.innerText = "Delete Wildfire"
+      polygonDeleteButton.style.margin = "10px"
+      polygonDeleteButton.style.color = "orange"
+
+      createPolygonDeleteEvent(polygon, polygonDeleteButton)
+
+      // let id = polygon.id
+      // console.log(id)
+      // polygonDeleteButton.id = polygon.id
+      // console.log(polygonDeleteButton.id)
+      // // debugger
+      // polygonDeleteButton.addEventListener('click', event => {
+      //   debugger
+      //   let deleteConfig = {
+      //     method: 'DELETE'
+      //   }
+      //
+      //   fetch(POLYGONS_URL + `/${polygonDeleteButton.id}`, deleteConfig)
+      //   .catch(function(error){
+      //     console.log(error.message)
+      //   })
+      // })
+
+      // console.log(polygon)
+
+      return polygonDeleteButton
+    }
+
     function createDeleteEvent(wildfire, deleteButton, marker){
       deleteButton.addEventListener('click', function(event){
         deleteWildfire(wildfire, event, marker)
       })
     }
+
+    function createPolygonDeleteEvent(polygon, deleteButton){
+      // deleteButton.addEventListener('click', deletePolygon)
+      deleteButton.addEventListener('click', () => {
+        fetchPolygon(polygon)
+        polygon.setMap(null)
+      })
+    }
+
+    function fetchPolygon(polygon){
+      let lat = polygon.latLngs.g[0].g[0].lat()
+      let lng = polygon.latLngs.g[0].g[0].lng()
+
+      let polyDeleteConfig = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            lat,
+            lng
+      })
+      }
+
+      fetch(POLYGONS_URL, polyDeleteConfig)
+      .then(response => response.json())
+      .then(response => deletePolygon(response))
+
+      function deletePolygon(polygon){
+        let id = polygon.id
+        let deleteConfig = {
+          method: 'DELETE'
+        }
+
+        fetch(POLYGONS_URL + `/${id}`, deleteConfig)
+        .catch(function(error){
+          console.log(error.message)
+        })
+      }
+    }
+      // let id = polygon.id
+
 
     function deleteWildfire(wildfire, event, marker){
       marker.setMap(null)
@@ -382,32 +529,32 @@ const body = document.body
       })
     }
 
-      function updateCoordinates(latitude, longitude, wildfire, card){
-        let updateConfig = {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify({
-            latitude,
-            longitude
-          })
-        }
-        fetch(WILDFIRES_URL + `/${wildfire.id}`, updateConfig)
-        .then(function(response){
-          response.json()
-        })
-        .then(pessimisticRendering(latitude, longitude, card))
-        .catch(function(error){
-          console.log(error.message)
+    function updateCoordinates(latitude, longitude, wildfire, card){
+      let updateConfig = {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          latitude,
+          longitude
         })
       }
+      fetch(WILDFIRES_URL + `/${wildfire.id}`, updateConfig)
+      .then(function(response){
+        response.json()
+      })
+      .then(pessimisticRendering(latitude, longitude, card))
+      .catch(function(error){
+        console.log(error.message)
+      })
+    }
 
-      function pessimisticRendering(latitude, longitude, card){
-        card.querySelectorAll('p')[1].innerText = `Latitude: ${latitude}`
-        card.querySelectorAll('p')[2].innerText = `Longitude: ${longitude}`
-      }
+    function pessimisticRendering(latitude, longitude, card){
+      card.querySelectorAll('p')[1].innerText = `Latitude: ${latitude}`
+      card.querySelectorAll('p')[2].innerText = `Longitude: ${longitude}`
+    }
 
       google.maps.event.addListener(drawingManager, 'polygoncomplete', function(polygon){
 
@@ -425,7 +572,6 @@ const body = document.body
             latLng.push(long)
 
           }
-          console.log(latLng)
 
 
         let polySubmitButton = document.createElement('button')
@@ -480,8 +626,6 @@ const body = document.body
               </form>`
 
         div.append(form, polySubmitButton)
-
-        console.log(latLng[0])
 
         let infoWindow = new google.maps.InfoWindow({
           content: div,
@@ -647,16 +791,67 @@ const body = document.body
             }
             fetch(POLYGONS_URL, polyConfig)
             .then(response => response.json())
-            .then(response => console.log(response))
-            // .then(renderWildfireCard)
+            .then(renderPolygonCard)
             .catch(function(error){
               console.log(error.message)
             })
         }
-
-
-
       })
+
+      function setPolygonCoords(polygon, card){
+        let polygonCoords = [
+          {lat: polygon.lat1, lng: polygon.long1},
+          {lat: polygon.lat2, lng: polygon.long2},
+          {lat: polygon.lat3, lng: polygon.long3},
+          {lat: polygon.lat4, lng: polygon.long4},
+          {lat: polygon.lat5, lng: polygon.long5},
+          {lat: polygon.lat6, lng: polygon.long6},
+          {lat: polygon.lat7, lng: polygon.long7},
+          {lat: polygon.lat8, lng: polygon.long8},
+          {lat: polygon.lat9, lng: polygon.long9},
+          {lat: polygon.lat10, lng: polygon.long10},
+          {lat: polygon.lat11, lng: polygon.long11},
+          {lat: polygon.lat13, lng: polygon.long13},
+          {lat: polygon.lat14, lng: polygon.long14},
+          {lat: polygon.lat15, lng: polygon.long15}
+        ]
+
+        let newCoordArray = []
+        polygonCoords.forEach(coord => {
+          if (coord.lat !== 0 && coord.long !== 0){
+            newCoordArray.push(coord)
+          }
+        })
+
+        let newPolygon = new google.maps.Polygon({
+          paths: newCoordArray,
+          draggable: true,
+          map: map,
+          fillColor: '#ff5733',
+          fillOpacity: 0.3,
+          strokeWeight: 1,
+          clickable: true,
+          editable: true,
+          zIndex: 1
+        })
+        addPolygonListener(newPolygon, card)
+
+      }
+
+      function addPolygonListener(polygon, card){
+        google.maps.event.addListener(polygon,'click', function(event){
+          // debugger
+          let polygonInfo = new google.maps.InfoWindow({
+            content: card,
+            position: {lat: polygon.latLngs.g[0].g[0].lat(), lng: polygon.latLngs.g[0].g[0].lng()}
+          })
+          polygonInfo.open(map)
+          //
+          let deleteButton = createPolygonCardDelete(polygon)
+          card.append(deleteButton)
+        })
+        // addpDragListener(marker, wildfire, card)
+      }
 
 
     }

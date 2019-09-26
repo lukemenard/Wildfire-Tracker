@@ -8,7 +8,6 @@ A Google Maps-Based Javascript web app that tracks U.S. wildfires in near real-t
       - [Choosing a Google Maps Products Suite](#choosing-a-google-maps-products-suite)</br>
       - [Getting an API Key](#getting-an-api-key)</br>
       - [Enabling Project Billing](#enabling-project-billing)</br>
-      </br>
    - [Using this Repository](#using-this-repository)</br>
 
 [Features](#features)</br>

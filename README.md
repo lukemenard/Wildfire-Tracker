@@ -92,9 +92,10 @@ Drag a wildifire point to edit its lat/long in real-time.</br></br>
 ![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Gif1.gif)</br>
 ### Delete a Wildfire Point
 Click an existing wildfire point and select "Delete Wildfire" to both pessimistically and optimistically delete a wildfire.</br></br>
-![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Image6.png)</br>
+![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Image7.png)</br>
 ### Create a Wildfire Polygon
-
+Choose the polygon icon from the Google Maps drawing manager. Click the map to create individual polygon vertices at your chosen lat/longs. Click your original vertex to complete the polygon. Enter relevant wildfire details in the info window and create the new, persistent polygon.</br></br>
+![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Gif2.gif)</br>
 
 ## Technologies Used
   ### Backend:

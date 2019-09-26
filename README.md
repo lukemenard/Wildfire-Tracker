@@ -85,12 +85,16 @@ The Google Maps JavaScript API requires you to enter credit card information and
 ## Features
 Upon rendering, the map will automatically georeference to your current location. </br>
 ### Create a new Wildfire Point
-Double-click anywhere on the map to open an info window. Enter relevant wildfire details and click "Create New Wildfire" to generate a new, persistent wildfire point.</br>
+Double-click anywhere on the map to open an info window. Enter relevant wildfire details and click "Create New Wildfire" to generate a new, persistent wildfire point.</br></br>
+![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Image6.png)</br>
 ### Edit a Wildfire Point Location
-
+Drag a wildifire point to edit its lat/long in real-time.</br></br>
+![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Gif1.gif)</br>
 ### Delete a Wildfire Point
-
+Click an existing wildfire point and select "Delete Wildfire" to both pessimistically and optimistically delete a wildfire.</br></br>
+![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Image6.png)</br>
 ### Create a Wildfire Polygon
+
 
 ## Technologies Used
   ### Backend:

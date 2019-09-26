@@ -1,5 +1,5 @@
 # Wildfire Tracker
-
+A Google Maps-Based Javascript web app that tracks U.S. wildfires in near real-time
 
 ## Technologies Used
   ### Backend:

@@ -20,11 +20,31 @@ Before using Wildfire Tracker, you'll need to generate a personal Google Maps AP
 4. Enable project billing
 
 #### Creating a Google Cloud Project
-Create an account on the Google Cloud Platform. To then add a new project to you account, navigate to the projects dropdown on the main page,
+Create an account on the Google Cloud Platform. To then add a new project to you account, navigate to the projects dropdown on the main page, </br>
+![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Image1.png) </br>
+</br>
+click the "New Project" button on the subsequent screen, </br>
+</br>
+![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Image2.png) </br>
+</br>
+and give the new project a name (with the option of assigning it to an organizational folder). </br>
+</br>
+![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Image3.png) </br>
 
-click the "New Project" button on the subsequent screen,
+#### Choosing a Google Maps Products Suite
+The Google Maps JavaScript API offers three distinct sets of products and tools that a developer can apply to a project in their Cloud Platform:
 
-and give the new project a name (with the option of assigning it to an organizational folder).
+  • **Maps**: give the developer the ability to add interactive maps to an application that include Street View imagery and 360-degree panoramas.</br>
+  • **Routes**: allow your user to determine the most efficient path from one point to another. The Routes package also provides navigation and real-time traffic updates.</br>
+  • **Places**: allows the user to find specific locations using phone numbers and addresses. The Places package includes additional APIs that provide the capacity to geocode addresses to specific coordinates and return the location of a device using cell tower and WiFi node data.</br>
+
+Apply both the Maps and Places packages to utilize Wildfire Tracker.
+
+#### Getting and API Key
+To render a map in the application, I you'll first need to generate an API key specific to my Google Cloud account and project. To create a new API key, navigate back to the [Google Cloud Platform](https://cloud.google.com/console/google/maps-apis/overview). Within the hamburger menu, select the "Credentials" option in the "APIs & Services" menu.</br>
+</br>
+![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Image4.png)</br>
+</br>
 
 ## Contributing
 Pull requests, bug alerts, and recommendations for new features are always welcome!

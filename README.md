@@ -3,11 +3,12 @@ A Google Maps-Based Javascript web app that tracks U.S. wildfires in near real-t
 
 ## Navigation
 [Using Wildfire Tracker](#using-wildfire-tracker)</br>
-  • [Project Setup on the Google Cloud Platform](#project-setup-on-the-google-cloud-platform)</br>
-      • [Creating a Google Cloud Project](#creating-a-google-cloud-project)</br>
-      • [Choosing a Google Maps Products Suite](#choosing-a-google-maps-products-suite)</br>
-      • [Getting an API Key](#getting-an-api-key)</br>
-  </br>
+-- [Project Setup on the Google Cloud Platform](#project-setup-on-the-google-cloud-platform)</br>
+  -- [Creating a Google Cloud Project](#creating-a-google-cloud-project)</br>
+  -- [Choosing a Google Maps Products Suite](#choosing-a-google-maps-products-suite)</br>
+  -- [Getting an API Key](#getting-an-api-key)</br>
+  -- [Enabling Project Billing](#enabling-project-billing)</br>
+
 [Technologies Used](#technologies-used)</br>
 
 
@@ -50,6 +51,10 @@ Choosing the "Create credentials" dropdown on the subsequent page and selecting 
 </br>
 ![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Image5.png)</br>
 </br>
+
+#### Enabling Project Billing
+The Google Maps JavaScript API requires you to enter credit card information and acknowledge a billing policy before enabling the use of products in an application. Total monthly billing for a project is determined by both the Google Maps products utilized, as well as application usage.
+
 
 ## Technologies Used
   ### Backend:

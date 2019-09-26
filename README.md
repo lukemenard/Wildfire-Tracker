@@ -1,7 +1,7 @@
 # Wildfire Tracker
 A Google Maps-Based Javascript web app that tracks U.S. wildfires in near real-time
 
-## Navigation
+## ReadMe Navigation
 [Using Wildfire Tracker](#using-wildfire-tracker)</br>
    - [Project Setup on the Google Cloud Platform](#project-setup-on-the-google-cloud-platform)</br>
       - [Creating a Google Cloud Project](#creating-a-google-cloud-project)</br>
@@ -10,6 +10,12 @@ A Google Maps-Based Javascript web app that tracks U.S. wildfires in near real-t
       - [Enabling Project Billing](#enabling-project-billing)</br>
       </br>
    - [Using this Repository](#using-this-repository)</br>
+
+[Features](#features)</br>
+   - [Create a new Wildfire Point](#create-a-new-wildfire-point)</br>
+   - [Edit a Wildfire Point Location](#edit-a-wildfire-point-location)</br>
+   - [Delete a Wildfire Point](#delete-a-wildfire-point)</br>
+   - [Create a Wildfire Polygon](#create-a-wildfire-polygon)
 
 [Technologies Used](#technologies-used)</br>
 
@@ -77,6 +83,15 @@ The Google Maps JavaScript API requires you to enter credit card information and
     - `npm install -g lite-server`
     - `lite-server`
 
+## Features
+Upon rendering, the map will automatically georeference to your current location. </br>
+### Create a new Wildfire Point
+Double-click anywhere on the map to open an info window. Enter relevant wildfire details and click "Create New Wildfire" to generate a new, persistent wildfire point.</br>
+### Edit a Wildfire Point Location
+
+### Delete a Wildfire Point
+
+### Create a Wildfire Polygon
 
 ## Technologies Used
   ### Backend:

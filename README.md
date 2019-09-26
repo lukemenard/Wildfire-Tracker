@@ -3,12 +3,12 @@
 
 ## Technologies Used
   ### Backend:
-   • Ruby on Rails
+   • Ruby on Rails</br>
    • Postgres
 
 ### Frontend :
-   • Vanilla Javascript
-   • [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/tutorial)
+   • Vanilla Javascript</br>
+   • [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/tutorial)</br>
    • [Bootstrap](https://getbootstrap.com/) CDN
 
 ## Contributing

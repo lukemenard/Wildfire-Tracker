@@ -1,2 +1,0 @@
-class SightingsController < ApplicationController
-end

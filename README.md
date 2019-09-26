@@ -8,8 +8,12 @@ A Google Maps-Based Javascript web app that tracks U.S. wildfires in near real-t
       - [Choosing a Google Maps Products Suite](#choosing-a-google-maps-products-suite)</br>
       - [Getting an API Key](#getting-an-api-key)</br>
       - [Enabling Project Billing](#enabling-project-billing)</br>
+      </br>
+   - [Using this Repository](#using-this-repository)</br>
 
 [Technologies Used](#technologies-used)</br>
+
+[Contributing](#contributing)
 
 
 ## Using Wildfire Tracker
@@ -54,6 +58,24 @@ Choosing the "Create credentials" dropdown on the subsequent page and selecting 
 
 #### Enabling Project Billing
 The Google Maps JavaScript API requires you to enter credit card information and acknowledge a billing policy before enabling the use of products in an application. Total monthly billing for a project is determined by both the Google Maps products utilized, as well as application usage.
+
+### Using this Repository
+1. Install [ruby](https://www.ruby-lang.org/en/documentation/installation/). 
+   - See if Ruby is already installed locally by running `Ruby -v` in your command line. If it is installed, you will see a version number.
+
+2. Navigate to 'backend' within the Wildfire Tracker directory in your terminal, and run each of the following commands to create and populate a database with current wildfire point data and run a backend rails server:
+   - `bundle`
+   - `rails db:create`
+   - `rails db:migrate`
+   - `rails db:seed`
+   - `rails s`
+ 
+ 3. In a text editor, navigate to the index.html in the 'frontend' folder and enter your [personal Google Maps API key](#getting-an-api-key) in the code placeholder:</br>
+ ```<script async defer src="https://maps.googleapis.com/maps/api/js?key={YOUR API KEY HERE}callback=initMap&libraries=drawing" type="text/javascript"></script>```
+ 
+ 4. In a new terminal window, navigate to 'frontend' in the Wildfire Tracker directory and run the followiing commands to install and deploy lite-server locally:
+    - `npm install -g lite-server`
+    - `lite-server`
 
 
 ## Technologies Used

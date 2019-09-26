@@ -2,16 +2,17 @@
 A Google Maps-Based Javascript web app that tracks U.S. wildfires in near real-time
 
 ## Navigation
-[Using Wildfire Tracker](#using-wildfire-tracker)
-  • [Project Set Up on the Google Cloud Platform](#project-Setup-on-the-Google-Cloud-Platform)
-  • [Creating a Google Cloud Project](#creating-a-google-cloud-project)
-  • [Choosing a Google Maps Products Suite](#creating-a-google-maps-products-suite)
-  • [Getting an API Key](#getting-an-api-key)
-[Technologies Used](#technologies-used)
+[Using Wildfire Tracker](#using-wildfire-tracker)</br>
+  • [Project Setup on the Google Cloud Platform](#project-setup-on-the-google-cloud-platform)</br>
+      • [Creating a Google Cloud Project](#creating-a-google-cloud-project)</br>
+      • [Choosing a Google Maps Products Suite](#choosing-a-google-maps-products-suite)</br>
+      • [Getting an API Key](#getting-an-api-key)</br>
+  </br>
+[Technologies Used](#technologies-used)</br>
 
 
 ## Using Wildfire Tracker
-  ### Project Set Up on the Google Cloud Platform
+### Project Setup on the Google Cloud Platform
 Before using Wildfire Tracker, you'll need to generate a personal Google Maps API key by completing the following steps:
 1. Create a Google Maps project on the Google Cloud Platform
 2. Choose a suite of Google Maps products to apply to the project
@@ -39,7 +40,7 @@ The Google Maps JavaScript API offers three distinct sets of products and tools 
 
 Apply both the Maps and Places packages to utilize Wildfire Tracker.
 
-#### Getting and API Key
+#### Getting an API Key
 To render a map in the application, I you'll first need to generate an API key specific to my Google Cloud account and project. To create a new API key, navigate back to the [Google Cloud Platform](https://cloud.google.com/console/google/maps-apis/overview). Within the hamburger menu, select the "Credentials" option in the "APIs & Services" menu.</br>
 </br>
 ![Image](https://github.com/lukemenard/Wildfire-Tracker/blob/master/Wildfire-Tracker/Assets/Images/Image4.png)</br>

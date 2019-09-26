@@ -1,7 +1,7 @@
 # Wildfire Tracker
 A Google Maps-Based Javascript web app that tracks U.S. wildfires in near real-time
 
-#### Creating a Google Cloud Project
+Creating a Google Cloud Project
 
 ## Technologies Used
   ### Backend:

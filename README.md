@@ -102,7 +102,7 @@ Choose the polygon icon from the Google Maps drawing manager. Click the map to c
    • Ruby on Rails</br>
    • Postgres
 
-### Frontend :
+### Frontend:
    • Vanilla Javascript</br>
    • [Google Maps Javascript API](https://developers.google.com/maps/documentation/javascript/tutorial)</br>
    • [Bootstrap](https://getbootstrap.com/) CDN
